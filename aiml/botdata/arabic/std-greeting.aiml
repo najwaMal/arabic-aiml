@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml version="2.0">
+
+    <meta name="language" content="ar"/>
+
+    <category>
+        <pattern>السلام عليكم</pattern>
+        <template>
+            وعليكم السلام ورحمة الله و بركاته
+        </template>
+    </category>
+
+    <category>
+        <pattern>أهلا</pattern>
+        <template>
+            هلا و الله
+        </template>
+    </category>
+</aiml>

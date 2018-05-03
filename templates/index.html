@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container {
+            width: 500px;
+            margin: 0 auto;
+        }
+        #chat_history {
+            width: 500px;
+        }
+
+        #input_wrapper {
+            padding: 10px;
+            margin: 10px;
+            text-align: left;
+        }
+
+        #chat_input {
+            width: 80%;
+        }
+
+        #send {
+            width: 10%;
+        }
+
+        .chat_line {
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .self {
+            background-color: #4CA2FF;
+            color: white;
+        }
+
+        .bnfsj {
+            background-color: #a526d9;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+<div id="chat_history">
+</div>
+<div id="input_wrapper">
+    <input type="text" id="chat_input" value="Hi"/>
+    <button id="send">Send</button>
+</div>
+</div>
+
+
+{% raw %}
+<script id="chat_line_template" type="x-tmpl-mustache">
+    <div class="chat_line {{ extra_class }}">
+    {{ msg }}
+    </div>
+</script>
+{% endraw %}
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+<script>
+
+    var chat_line_template = $('#chat_line_template').html();
+    Mustache.parse(chat_line_template);
+
+    function add_chat_history_line(msg, extra_class) {
+        var rendered = Mustache.render(chat_line_template, {msg: msg, extra_class: extra_class});
+        $('#chat_history').append(rendered);
+    }
+
+    function send_msg() {
+        var chat_input = $("#chat_input").val();
+        $("#chat_input").val("");
+        add_chat_history_line(chat_input, "self");
+        $.get("./talk", {chat_input: chat_input}, function (data) {
+            add_chat_history_line(data.response, "bnfsj");
+        });
+    }
+
+    $("#send").click(send_msg);
+    $(document).keypress(function(e) {
+        if(e.which == 13) {send_msg();}
+    });
+
+</script>
+</body>
+
+</html>
