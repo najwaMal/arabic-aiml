@@ -11,7 +11,7 @@ app.debug = True
 def get_aiml_kernal():
     if not hasattr(g, 'aiml_kernal'):
         g.aiml_kernal = aiml.Kernel()
-        g.aiml_kernal.learn("./aiml/botdata/standard/*.aiml")
+        g.aiml_kernal.learn("./aiml/botdata/arabic/*.aiml")
     return g.aiml_kernal
 
 @app.route('/')
